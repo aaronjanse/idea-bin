@@ -7,8 +7,8 @@
         <button class="btn btn-outline-secondary" type="button" v-on:click="addIdea">Add</button>
       </div>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item idea-item" v-if="ideas != {}" v-for="(idea, key) in ideas" v-bind:key="key">{{idea.text}}
+    <ul class="list-group" v-if="Object.keys(ideas).length !== 0">
+      <li class="list-group-item idea-item" v-for="(idea, key) in ideas" v-bind:key="key">{{idea.text}}
         <div class="float-right" v-on:click="removeIdea(key)">
          <i class="fas fa-times delete-icon"></i>
         </div>
@@ -17,6 +17,16 @@
         </a>
       </li>
     </ul>
+    <p id="welcome-text" v-else>
+      Idea Bin is an easy way to keep track of your ideas while keeping them private.
+
+      Feel free to bookmark this pahe so that you can quickly jot down your ideas as they come to you.
+
+      If you're curious: the URL consists of the id of your "bin" and your aes256 key.
+      Both of these things are in the hash—that way they're never sent to our servers.
+
+      Of course, you don't have to take my word for it; you should check yourself by reviewing the source code at <a href="https://github.com/aaronduino/idea-bin">https://github.com/aaronduino/idea-bin</a>
+    </p>
   </div>
 </template>
 
@@ -189,5 +199,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   margin-bottom: 60px;
+}
+
+#welcome-text {
+  text-align: left;
+  white-space: pre-line;
 }
 </style>
