@@ -20,7 +20,7 @@
     <p id="welcome-text" v-else>
       Idea Bin is an easy way to keep track of your ideas while keeping them private.
 
-      Feel free to bookmark this pahe so that you can quickly jot down your ideas as they come to you.
+      Feel free to bookmark this page so that you can quickly jot down your ideas as they come to you.
 
       If you're curious: the URL consists of the id of your "bin" and your aes256 key.
       Both of these things are in the hash—that way they're never sent to our servers.
