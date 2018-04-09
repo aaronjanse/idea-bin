@@ -1,6 +1,6 @@
 # Idea Bin
 
-> A place to keep track of your ideas
+> A private place to keep track of your ideas
 
 ![Screenshot](screenshot.png)
 
