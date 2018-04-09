@@ -1,5 +1,5 @@
 <template>
-  <div class="app container" id="app">
+  <div class="container" id="app">
     <h1>Idea Bin</h1>
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Your idea" v-model="textInput" v-on:keyup.enter="addIdea" autofocus/>
@@ -107,14 +107,16 @@ export default {
       const words = this.textInput.split(' ')
       const obj = {
         text: words.filter(word => !word.startsWith('#')).join(' '),
-        tags: (words.filter(word => word.startsWith('#')).join(' ')).trim()
+        tags: words.filter(word => word.startsWith('#')).join(' ').trim()
       }
       const encryptedObj = {
         text: encrypt(obj.text),
         tags: encrypt(obj.tags)
       }
+
       const id = firebaseIdeasRef.push(encryptedObj).key
       this.ideas[id] = obj
+
       this.textInput = ''
     },
     removeIdea: function (key) {
@@ -138,11 +140,10 @@ export default {
           for (var key in encryptedIdeas) {
             if (encryptedIdeas.hasOwnProperty(key)) {
               const encryptedIdea = encryptedIdeas[key]
-              const idea = {
+              ideas[key] = {
                 text: decrypt(encryptedIdea.text),
                 tags: decrypt(encryptedIdea.tags)
               }
-              ideas[key] = idea
             }
           }
           this.ideas = ideas
@@ -157,6 +158,7 @@ export default {
 </script>
 
 <style scoped>
+
 .badge {
   margin-left: 0.25em;
 }
