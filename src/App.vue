@@ -107,7 +107,6 @@ export default {
   name: 'App',
   data () {
     return {
-      uid: '',
       textInput: '',
       ideas: {}
     }
