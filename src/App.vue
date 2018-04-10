@@ -43,6 +43,26 @@ function uuidv4 () {
   )
 }
 
+// from https://stackoverflow.com/a/2450976/9436888
+function shuffle (array) {
+  var currentIndex = array.length
+  var temporaryValue, randomIndex
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+  }
+
+  return array
+}
+
 if (!hash) {
   var buf = new Uint8Array(32)
   window.crypto.getRandomValues(buf)
@@ -145,17 +165,19 @@ export default {
       if (user) {
         firebaseIdeasRef.once('value').then(function (snapshot) {
           var encryptedIdeas = snapshot.val() || {}
-          var ideas = {}
+          var ideasList = []
           for (var key in encryptedIdeas) {
             if (encryptedIdeas.hasOwnProperty(key)) {
               const encryptedIdea = encryptedIdeas[key]
-              ideas[key] = {
+              ideasList.push([key, {
                 text: decrypt(encryptedIdea.text),
                 tags: decrypt(encryptedIdea.tags)
-              }
+              }])
             }
           }
-          this.ideas = ideas
+          shuffle(ideasList).forEach(function ([key, value]) {
+            Vue.set(this.ideas, key, value)
+          }.bind(this))
         }.bind(this))
       } else {
         // User is signed out.
